@@ -18,8 +18,8 @@ const Layout = ({ children }: LayoutProps) => {
 
   return (
     <div className="h-screen overflow-hidden">
-      <div className="mx-auto flex h-full w-full">
-        <aside className="hidden w-72 shrink-0 border-r border-slate-200 bg-white xl:block">
+      <div className="mx-auto flex h-full w-full flex-col xl:flex-row">
+        <aside className="w-full shrink-0 border-b border-slate-200 bg-white xl:w-72 xl:border-b-0 xl:border-r">
           <Sidebar />
         </aside>
 
