@@ -17,17 +17,19 @@ const Layout = ({ children }: LayoutProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 text-zinc-900">
-      <Header />
-
-      <div className="mx-auto flex w-full max-w-6xl gap-6 px-4 py-6 lg:px-6">
-        <aside className="sticky top-6 hidden h-[calc(100vh-6rem)] w-72 shrink-0 lg:block">
+    <div className="min-h-screen bg-[linear-gradient(180deg,_#f8f1ea_0%,_#faf7f3_42%,_#eff2f6_100%)] p-4 text-slate-950 lg:p-6">
+      <div className="mx-auto flex min-h-[calc(100vh-2rem)] w-full max-w-[1600px] overflow-hidden rounded-[32px] border border-white/80 bg-white shadow-[0_24px_80px_rgba(15,23,42,0.12)] lg:min-h-[calc(100vh-3rem)]">
+        <aside className="hidden w-72 shrink-0 border-r border-slate-200 bg-white xl:block">
           <Sidebar />
         </aside>
 
-        <main className="min-w-0 flex-1 rounded-2xl bg-white p-6 shadow-sm ring-1 ring-zinc-200">
-          {children}
-        </main>
+        <div className="flex min-w-0 flex-1 flex-col bg-[#f7f8fa]">
+          <Header />
+
+          <main className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6">
+            {children}
+          </main>
+        </div>
       </div>
     </div>
   );

@@ -1,6 +1,17 @@
 import { API_BASE_URL } from "./Axios";
 
 const TOKEN_KEY = "auth_token";
+const TOKEN_FIELD_NAMES = new Set([
+  "token",
+  "access_token",
+  "accesstoken",
+  "jwt",
+  "jwttoken",
+  "id_token",
+  "idtoken",
+  "auth_token",
+  "authtoken",
+]);
 
 export type LoginPayload = {
   email: string;
@@ -16,6 +27,63 @@ type LoginResponse = {
     accessToken?: string;
   };
   [key: string]: unknown;
+};
+
+const normalizeKey = (key: string) => key.replace(/[\s-]/g, "_").toLowerCase();
+
+const extractTokenFromValue = (value: unknown): string | null => {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const stack: Record<string, unknown>[] = [value as Record<string, unknown>];
+  const seen = new WeakSet<object>();
+
+  while (stack.length > 0) {
+    const current = stack.pop();
+
+    if (!current || seen.has(current)) {
+      continue;
+    }
+
+    seen.add(current);
+
+    for (const [key, candidate] of Object.entries(current)) {
+      const normalizedKey = normalizeKey(key);
+
+      if (TOKEN_FIELD_NAMES.has(normalizedKey)) {
+        if (typeof candidate === "string" && candidate.trim()) {
+          return candidate.trim();
+        }
+      }
+
+      if (
+        (normalizedKey.includes("token") || normalizedKey.includes("auth")) &&
+        typeof candidate === "string" &&
+        candidate.trim()
+      ) {
+        return candidate.trim();
+      }
+
+      if (candidate && typeof candidate === "object") {
+        stack.push(candidate as Record<string, unknown>);
+      }
+    }
+  }
+
+  return null;
+};
+
+const extractTokenFromHeaders = (headers: Headers) => {
+  const bearerHeader = headers.get("authorization");
+  const rawHeader =
+    bearerHeader ?? headers.get("x-auth-token") ?? headers.get("x-access-token");
+
+  if (!rawHeader) {
+    return null;
+  }
+
+  return rawHeader.replace(/^Bearer\s+/i, "").trim() || null;
 };
 
 export const getAuthToken = () => {
@@ -64,7 +132,7 @@ export async function loginUser(payload: LoginPayload) {
   }
 
   const token =
-    data?.token ?? data?.accessToken ?? data?.data?.token ?? data?.data?.accessToken;
+    extractTokenFromValue(data) ?? extractTokenFromHeaders(response.headers);
 
   if (!token) {
     throw new Error("Login succeeded, but no token was returned.");

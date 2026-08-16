@@ -1,45 +1,62 @@
 import React from "react";
 
-const navItems = [
-  { label: "Work", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
-];
-
 const Header = () => {
   return (
-    <header className="w-full border-b border-zinc-200 bg-white/95 px-6 py-4 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-4">
-        <a href="#" className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-900 text-sm font-semibold text-white">
-            N
-          </div>
-          <div>
-            <p className="text-sm font-semibold tracking-tight text-zinc-900">
-              Nikhil
-            </p>
-            <p className="text-xs text-zinc-500">Portfolio</p>
-          </div>
-        </a>
+    <header className="border-b border-slate-200 bg-white px-4 py-4 sm:px-6">
+      <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
+        <div className="min-w-0 flex-1">
+          <label className="flex h-12 w-full items-center gap-3 rounded-full border border-slate-200 bg-slate-50 px-4 text-sm text-slate-500 shadow-sm focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/15">
+            <span className="text-slate-400" aria-hidden="true">
+              Search
+            </span>
+            <input
+              type="search"
+              placeholder="Search users, reports, orders"
+              className="w-full bg-transparent text-sm text-slate-950 outline-none placeholder:text-slate-400"
+            />
+          </label>
+        </div>
 
-        <nav aria-label="Primary" className="hidden items-center gap-2 sm:flex">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="rounded-full px-3 py-2 text-sm font-medium text-zinc-600 transition hover:bg-zinc-100 hover:text-zinc-900"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+        <div className="flex flex-wrap items-center gap-3">
+          <button className="inline-flex h-12 items-center gap-3 rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground shadow-sm transition hover:bg-[#e85f00]">
+            <span className="text-base leading-none">+</span>
+            <span>Add</span>
+            <span className="border-l border-white/15 pl-3 text-xs">v</span>
+          </button>
 
-        <a
-          href="#contact"
-          className="inline-flex items-center justify-center rounded-full border border-zinc-300 px-4 py-2 text-sm font-medium text-zinc-900 transition hover:border-zinc-900 hover:bg-zinc-900 hover:text-white"
-        >
-          Hire me
-        </a>
+          <button
+            type="button"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-sm text-primary shadow-sm transition hover:border-primary/30 hover:bg-primary/5"
+            aria-label="Notifications"
+          >
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-25" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
+            </span>
+          </button>
+
+          <button
+            type="button"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-slate-200 bg-white text-sm text-primary shadow-sm transition hover:border-primary/30 hover:bg-primary/5"
+            aria-label="Settings"
+          >
+            <span className="h-2.5 w-2.5 rounded-full border-2 border-primary" />
+          </button>
+
+          <button
+            type="button"
+            className="flex items-center gap-3 rounded-full border border-slate-200 bg-white px-3 py-2 shadow-sm transition hover:border-primary/30 hover:bg-primary/5"
+          >
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary to-[#c75100] text-xs font-semibold text-white">
+              DD
+            </div>
+            <div className="hidden text-left sm:block">
+              <p className="text-sm font-medium text-slate-950">Derek Dalton</p>
+              <p className="text-xs text-slate-500">Superadmin</p>
+            </div>
+            <span className="text-xs text-primary">v</span>
+          </button>
+        </div>
       </div>
     </header>
   );
