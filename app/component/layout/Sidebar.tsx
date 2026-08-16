@@ -10,14 +10,11 @@ const Sidebar = () => {
   return (
     <aside className="flex h-full w-full flex-col bg-white px-4 py-5 text-slate-950">
       <div className="border-b border-slate-200 pb-5">
-        <div className="flex items-center gap-3 px-2">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary text-sm font-semibold text-primary-foreground shadow-sm">
-            C
-          </div>
-          <div>
-            <p className="text-base font-semibold tracking-tight">CORCOM</p>
-            <p className="text-xs text-slate-500">Corp Community</p>
-          </div>
+        <div className="px-2">
+          <p className="text-[20px] font-semibold leading-6 tracking-tight text-slate-950">
+            Nikhil Kumar S
+          </p>
+          <p className="text-sm font-medium text-primary">Visualizer</p>
         </div>
       </div>
 
