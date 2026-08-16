@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
@@ -11,22 +11,54 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   const pathname = usePathname();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+
+    if (isSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isSidebarOpen]);
 
   if (pathname === "/") {
     return <>{children}</>;
   }
 
   return (
-    <div className="h-screen overflow-hidden">
-      <div className="mx-auto flex h-full w-full flex-col xl:flex-row">
-        <aside className="w-full shrink-0 border-b border-slate-200 bg-white xl:w-72 xl:border-b-0 xl:border-r">
+    <div className="h-screen overflow-hidden bg-[linear-gradient(180deg,_#f8f1ea_0%,_#faf7f3_42%,_#eff2f6_100%)]">
+      <div className="flex h-full w-full">
+        <aside className="hidden w-72 shrink-0 border-r border-slate-200 bg-white xl:block">
           <Sidebar />
         </aside>
 
-        <div className="flex min-w-0 flex-1 flex-col bg-[#f7f8fa] min-h-0">
-          <Header />
+        <div
+          className={`fixed inset-0 z-40 bg-slate-950/30 transition-opacity xl:hidden ${
+            isSidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
+          aria-hidden="true"
+          onClick={() => setIsSidebarOpen(false)}
+        />
 
-          <main className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-5 lg:p-6">
+        <aside
+          className={`fixed inset-y-0 left-0 z-50 w-[280px] max-w-[86vw] border-r border-slate-200 bg-white shadow-2xl transition-transform duration-300 xl:hidden ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <Sidebar
+            onClose={() => setIsSidebarOpen(false)}
+            onNavigate={() => setIsSidebarOpen(false)}
+          />
+        </aside>
+
+        <div className="flex min-w-0 flex-1 min-h-0 flex-col bg-[#f7f8fa]">
+          <Header onMenuClick={() => setIsSidebarOpen(true)} />
+
+          <main className="min-w-0 flex-1 overflow-y-auto p-3 sm:p-4 lg:p-5">
             {children}
           </main>
         </div>
