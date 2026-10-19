@@ -22,8 +22,8 @@ type SidebarProps = {
 
 const mainNavItems = [
   { label: "Dashboard", href: "/dashboard", icon: FiGrid },
-  { label: "Projects", href: "/projects", icon: FiFolder, badge: "12" },
-  { label: "Testimonials", href: "/testimonials", icon: FiMessageSquare, badge: "8" },
+  { label: "Projects", href: "/projects", icon: FiFolder },
+  { label: "Testimonials", href: "/testimonials", icon: FiMessageSquare },
 ];
 
 const Sidebar = ({ onClose, onNavigate }: SidebarProps) => {
@@ -104,26 +104,12 @@ const Sidebar = ({ onClose, onNavigate }: SidebarProps) => {
                       <span className="tracking-tight">{item.label}</span>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                      {item.badge ? (
-                        <span
-                          className={`rounded-full px-2 py-0.5 text-xs font-extrabold ${
-                            isActive
-                              ? "bg-[#fb6c00]/20 text-[#fb6c00]"
-                              : "bg-slate-200/80 text-slate-700 group-hover:bg-slate-300/80"
-                          }`}
-                        >
-                          {item.badge}
-                        </span>
-                      ) : null}
-
-                      {isActive ? (
-                        <span
-                          className="h-2 w-2 rounded-full bg-[#fb6c00]"
-                          aria-hidden="true"
-                        />
-                      ) : null}
-                    </div>
+                    {isActive ? (
+                      <span
+                        className="h-2 w-2 rounded-full bg-[#fb6c00]"
+                        aria-hidden="true"
+                      />
+                    ) : null}
                   </Link>
                 );
               })}
@@ -169,15 +155,12 @@ const Sidebar = ({ onClose, onNavigate }: SidebarProps) => {
       {/* Bottom Footer Section */}
       <div className="border-t border-slate-200/80 p-3.5 sm:p-4 space-y-3">
         {/* System Status Pill */}
-        <div className="flex items-center justify-between rounded-xl bg-slate-50 border border-slate-200 px-3 py-2 text-xs text-slate-800">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            <span className="font-bold text-slate-900">API Operational</span>
-          </div>
-          <span className="text-xs font-mono font-bold text-slate-500">v2.4</span>
+        <div className="flex items-center gap-2 rounded-xl bg-slate-50 border border-slate-200 px-3 py-2 text-xs text-slate-800">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          <span className="font-bold text-slate-900">API Operational</span>
         </div>
 
         {/* User Profile Lockup */}
