@@ -145,3 +145,67 @@ export async function loginUser(payload: LoginPayload) {
     token,
   };
 }
+
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+  email_verified_at: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type MeResponse = {
+  success: boolean;
+  user: User;
+  message?: string;
+};
+
+export async function getLoggedInUser(): Promise<User | null> {
+  const token = getAuthToken();
+  if (!token) {
+    return null;
+  }
+
+  const response = await fetch(`${API_BASE_URL}/me`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  const data = (await response.json().catch(() => null)) as MeResponse | null;
+
+  if (!response.ok) {
+    if (response.status === 401) {
+      clearAuthToken();
+    }
+    throw new Error(data?.message ?? "Failed to fetch user profile.");
+  }
+
+  return data?.user ?? (data as unknown as User) ?? null;
+}
+
+export async function logoutUser(): Promise<void> {
+  const token = getAuthToken();
+
+  try {
+    if (token) {
+      await fetch(`${API_BASE_URL}/logout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Logout request failed:", error);
+  } finally {
+    clearAuthToken();
+  }
+}
+

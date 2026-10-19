@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="iconGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb6c00" />
+      <stop offset="100%" stop-color="#e05300" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#fb6c00" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <rect x="5" y="5" width="70" height="70" rx="20" fill="url(#iconGrad)" />
+    <!-- Visualizer Waveform / Equalizer Bars -->
+    <rect x="21" y="32" width="6" height="16" rx="3" fill="#ffffff" opacity="0.85" />
+    <rect x="31" y="23" width="6" height="34" rx="3" fill="#ffffff" />
+    <rect x="41" y="17" width="6" height="46" rx="3" fill="#ffffff" />
+    <rect x="51" y="27" width="6" height="26" rx="3" fill="#ffffff" opacity="0.85" />
+    <circle cx="61" cy="19" r="3.5" fill="#ffffff" opacity="0.9" />
+  </g>
+</svg>

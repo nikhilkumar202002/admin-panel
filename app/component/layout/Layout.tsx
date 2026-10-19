@@ -30,14 +30,14 @@ const Layout = ({ children }: LayoutProps) => {
   }
 
   return (
-    <div className="h-screen overflow-hidden bg-[linear-gradient(180deg,_#f8f1ea_0%,_#faf7f3_42%,_#eff2f6_100%)]">
+    <div className="h-screen overflow-hidden bg-[#f8fafc] font-google-sans text-slate-900">
       <div className="flex h-full w-full">
-        <aside className="hidden w-72 shrink-0 border-r border-slate-200 bg-white xl:block">
+        <aside className="hidden w-72 shrink-0 border-r border-slate-200/80 bg-white xl:block">
           <Sidebar />
         </aside>
 
         <div
-          className={`fixed inset-0 z-40 bg-slate-950/30 transition-opacity xl:hidden ${
+          className={`fixed inset-0 z-40 bg-slate-950/20 backdrop-blur-xs transition-opacity xl:hidden ${
             isSidebarOpen ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
           aria-hidden="true"
@@ -45,7 +45,7 @@ const Layout = ({ children }: LayoutProps) => {
         />
 
         <aside
-          className={`fixed inset-y-0 left-0 z-50 w-[280px] max-w-[86vw] border-r border-slate-200 bg-white shadow-2xl transition-transform duration-300 xl:hidden ${
+          className={`fixed inset-y-0 left-0 z-50 w-[280px] max-w-[86vw] border-r border-slate-200/80 bg-white shadow-2xl transition-transform duration-300 xl:hidden ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -55,10 +55,10 @@ const Layout = ({ children }: LayoutProps) => {
           />
         </aside>
 
-        <div className="flex min-w-0 flex-1 min-h-0 flex-col bg-[#f7f8fa]">
+        <div className="flex min-w-0 flex-1 min-h-0 flex-col bg-[#f8fafc]">
           <Header onMenuClick={() => setIsSidebarOpen(true)} />
 
-          <main className="min-w-0 flex-1 overflow-y-auto p-3 sm:p-4 lg:p-5">
+          <main className="min-w-0 flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
             {children}
           </main>
         </div>

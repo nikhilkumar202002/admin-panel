@@ -24,6 +24,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.cdnfonts.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.cdnfonts.com/css/google-sans"
+        />
+      </head>
       <body className="min-h-full">
         <Layout>{children}</Layout>
       </body>
