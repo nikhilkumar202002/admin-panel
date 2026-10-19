@@ -37,25 +37,20 @@ type FormState = {
 };
 
 const initialState: FormState = {
-  title: "E-Commerce Website",
-  slug: "e-commerce-website",
-  description: "A modern responsive e-commerce platform built with React and Laravel.",
-  thumbnail: "https://example.com/storage/projects/thumbnails/ecommerce-thumb.jpg",
-  featured_image:
-    "https://example.com/storage/projects/featured-images/ecommerce-featured.jpg",
-  featured_image_alt: "E-commerce website homepage preview",
-  gallery_images: [
-    "https://example.com/storage/projects/gallery/1.jpg",
-    "https://example.com/storage/projects/gallery/2.jpg",
-    "https://example.com/storage/projects/gallery/3.jpg",
-  ].join("\n"),
-  category: "Web Development",
-  client: "ABC Company",
-  project_url: "https://example.com",
-  github_url: "https://github.com/example/project",
-  technologies: "React, Node.js, MongoDB, Laravel",
-  featured: true,
-  status: true,
+  title: "",
+  slug: "",
+  description: "",
+  thumbnail: "",
+  featured_image: "",
+  featured_image_alt: "",
+  gallery_images: "",
+  category: "",
+  client: "",
+  project_url: "",
+  github_url: "",
+  technologies: "",
+  featured: false,
+  status: false,
 };
 
 const fieldClass =
@@ -85,8 +80,8 @@ const buildPayload = (form: FormState): ProjectPayload => ({
 
 const Projectcreate = () => {
   const [form, setForm] = useState<FormState>(initialState);
-  const [submittedPayload, setSubmittedPayload] = useState<ProjectPayload>(
-    buildPayload(initialState)
+  const [submittedPayload, setSubmittedPayload] = useState<ProjectPayload | null>(
+    null
   );
 
   const previewPayload = useMemo(() => buildPayload(form), [form]);
@@ -118,7 +113,7 @@ const Projectcreate = () => {
 
   const handleReset = () => {
     setForm(initialState);
-    setSubmittedPayload(buildPayload(initialState));
+    setSubmittedPayload(null);
   };
 
   return (
@@ -131,7 +126,7 @@ const Projectcreate = () => {
           Create project
         </h2>
         <p className="max-w-2xl text-sm leading-6 text-slate-500">
-          Build a new project entry using the payload shape expected by your API.
+          Start with a blank project entry and fill in the API fields as needed.
         </p>
       </section>
 
@@ -311,7 +306,7 @@ const Projectcreate = () => {
                   value={form.project_url}
                   onChange={handleChange}
                   className={fieldClass}
-                  placeholder="https://example.com"
+                  placeholder="Project website URL"
                 />
               </div>
 
@@ -386,9 +381,15 @@ const Projectcreate = () => {
             <p className="text-xs font-medium uppercase tracking-[0.24em] text-primary">
               Submitted payload
             </p>
-            <pre className="mt-4 overflow-x-auto rounded-2xl bg-slate-50 p-4 text-xs leading-6 text-slate-700">
-              {JSON.stringify(submittedPayload, null, 2)}
-            </pre>
+            {submittedPayload ? (
+              <pre className="mt-4 overflow-x-auto rounded-2xl bg-slate-50 p-4 text-xs leading-6 text-slate-700">
+                {JSON.stringify(submittedPayload, null, 2)}
+              </pre>
+            ) : (
+              <p className="mt-4 text-sm text-slate-500">
+                Nothing submitted yet.
+              </p>
+            )}
           </div>
         </aside>
       </div>
