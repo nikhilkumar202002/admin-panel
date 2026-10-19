@@ -1,5 +1,5 @@
 import { API_BASE_URL } from "./Axios";
-import { getAuthToken } from "./Auth";
+import { getAuthToken, clearAuthToken } from "./Auth";
 
 /* =========================================================================
    Types & Interfaces
@@ -41,21 +41,28 @@ export type TechnologyPayload = {
 
 export type Project = {
   id: number;
+  project_category_id?: number | string | null;
   title: string;
   slug: string;
-  description: string;
-  thumbnail: string;
-  featured_image: string | null;
-  featured_image_alt: string | null;
+  description?: string | null;
+  seo_title?: string | null;
+  seo_description?: string | null;
+  thumbnail?: string | null;
+  featured_image?: string | null;
+  featured_image_alt?: string | null;
   gallery_images?: string[];
-  category: string;
-  category_id?: number | string;
-  client?: string;
-  project_url?: string;
-  github_url?: string;
-  technologies: string;
-  featured: number | boolean;
-  status: number | boolean;
+  category?: string | { id?: number; name?: string; category_name?: string } | null;
+  category_name?: string | null;
+  client?: string | null;
+  project_url?: string | null;
+  github_url?: string | null;
+  technologies?: string | string[] | Array<{ id?: number; name?: string; technology_name?: string }>;
+  technology_names?: string[];
+  featured: boolean | number;
+  status: boolean | number;
+  thumbnail_url?: string | null;
+  featured_image_url?: string | null;
+  gallery_images_urls?: string[];
   created_at?: string;
   updated_at?: string;
   [key: string]: unknown;
@@ -129,10 +136,13 @@ async function request<T>(
   const json = (await response.json().catch(() => null)) as ApiResponse<T> | T | null;
 
   if (!response.ok) {
+    if (response.status === 401) {
+      clearAuthToken();
+    }
     const errorMsg =
       (json && typeof json === "object" && "message" in json && typeof json.message === "string"
         ? json.message
-        : null) || errorMessage;
+        : null) || (response.status === 401 ? "Unauthorized. Please sign in again." : errorMessage);
     throw new Error(errorMsg);
   }
 

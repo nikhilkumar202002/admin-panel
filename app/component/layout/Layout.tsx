@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
+import { getAuthToken } from "@/app/api/Auth";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -11,7 +12,14 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (pathname !== "/" && !getAuthToken()) {
+      router.push("/");
+    }
+  }, [pathname, router]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
